@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel='stylesheet' type='text/css' href='node_modules/bootstrap/dist/css/bootstrap.min.css'>
+    <link rel='stylesheet' type='text/css' href='node_modules/font-awesome/css/font-awesome.min.css'>
+    <link rel='stylesheet' type='text/css' href='style.css'> 
+    <title>Document</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1">
+            <div class="page-header">
+                <h1>BookLook <i class="fa fa-eye"></i></h1>
+            </div>
+        
+            <div class="book">
+            </div>
+    
+            <form>
+                <h3>Enter ISBN Number</h3>
+        
+                <div class="form-group">
+                    <input type="text" id="isbn" class="form-control" placeholder="ISBN Number">
+                </div>
+        
+                <button type="button" class="btn btn-primary search-book">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <script id="book-template" type="text/x-handlebars-template">
+        <h1>{{title}}</h1>
+        <p>{{description}}</p>
+        <h3>Written by: {{authors}}</h3>
+        <img src="{{imageLinks}}">
+    </script>
+    <script src="node_modules/handlebars/dist/handlebars.min.js"></script>
+    <script src="node_modules/jquery/dist/jquery.js"> </script>
+    <script src="script.js"></script>
+</body>
+</html>
