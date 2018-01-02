@@ -1,7 +1,11 @@
 .title, .author, .description, .image, .pages, .minutes {
     display: none;
-  }
+}
   
-  .show {
+.show {
     display: block;
-  }
+}
+
+.spesific-book h1:hover {
+    cursor: pointer;
+}
