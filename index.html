@@ -15,34 +15,37 @@
             <div class="page-header">
                 <h1>BookLook <i class="fa fa-eye"></i></h1>
             </div>
-        
-            <div class="book">
-            </div>
     
-            <form>
+            <form id="search-form">
                 <h3>Enter Book Title</h3>
         
                 <div class="form-group">
-                    <input type="text" id="title" class="form-control" placeholder="Book Title" required>
-                    <input type="text" id="authors" class="form-control" placeholder="Book Authors" required>
-                    <input type="text" id="isbn" class="form-control" placeholder="ISBN Number" required>
+                    <input type="text" id="title" class="form-control" placeholder="Book Title" data-parsley-minlength="3">
+                    <input type="text" id="authors" class="form-control" placeholder="Book Authors" data-parsley-minlength="3">
+                    <input type="text" id="isbn" class="form-control" placeholder="ISBN Number" data-parsley-length="[13, 13]" data-parsley-type="integer">
                 </div>
         
                 <button type="button" class="btn btn-primary search-book">Search</button>
             </form>
+
+            <div class="book">
+            </div>
         </div>
     </div>
 
     <script id="book-template" type="text/x-handlebars-template">
-        <div class="spesific-book">
-            <h1 class="book-title">{{title}}</h1>
-            <p>{{description}}</p>
-            <h3>Written by: {{authors}}</h3>
-            <img src="{{imageLinks}}">
-        </div>
+        {{#each items}}
+            <div class="spesific-book">
+                <h1 class="book-title">{{volumeInfo.title}}</h1>
+                <p>{{volumeInfo.description}}</p>
+                <h3>Written by: {{volumeInfo.authors}}</h3>
+                <img src="{{volumeInfo.imageLinks.thumbnail}}">
+            </div>
+        {{/each}}
     </script>
     <script src="node_modules/handlebars/dist/handlebars.min.js"></script>
     <script src="node_modules/jquery/dist/jquery.js"> </script>
+    <script src="parsley.js"> </script>
     <script src="script.js"></script>
 </body>
 </html>

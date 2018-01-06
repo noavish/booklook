@@ -4,7 +4,7 @@ var fetch = function (searchKey, searchTerm) {
         url: `https://www.googleapis.com/books/v1/volumes?q=${searchKey}:${searchTerm}`,
         success: function (data) {
             console.log(data);
-            createBook(data);
+            appendBook(data);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
@@ -12,25 +12,11 @@ var fetch = function (searchKey, searchTerm) {
     });
 };
 
-function createBook(data) {
+function appendBook (data) {
     $('.book').empty();
-    for (var i=0; i<10 && i<data.items.length; i++) {
-        var title = data.items[i].volumeInfo.title;
-        var description = data.items[i].volumeInfo.description;
-        var authors = data.items[i].volumeInfo.authors;
-        var imageLinks = '';
-        if ('imageLinks' in data.items[i].volumeInfo) {
-            imageLinks = data.items[i].volumeInfo.imageLinks.thumbnail;
-        }
-        var bookObject = { title: title, description: description, authors: authors, imageLinks: imageLinks };
-        appendBook(bookObject);
-    }
-}
-
-function appendBook (bookObject) {
     var bookObjectSource = $('#book-template').html();
     var bookObjectTemplate = Handlebars.compile(bookObjectSource);
-    var newHTML = bookObjectTemplate(bookObject);
+    var newHTML = bookObjectTemplate(data);
     $('.book').append(newHTML);
 }
 
@@ -40,13 +26,15 @@ $( ".form-control" ).focus(function() {
     searchKey = this.id; 
     $(`input[id=${searchKey}]`).css("background-color", "#fff");
     $(`input[id!=${searchKey}]`).css("background-color", "#ccc"); 
+    $(this).parents('#search-form').parsley().reset();
 });
 
-$('.search-book').click(function () {
-    var searchTerm = $(`input[id=${searchKey}]`).val();
-    fetch(searchKey, searchTerm);
-    $('.book').empty();
-    $('.book').append('<img src="loading.gif">');
+$( ".search-book" ).click(function() {
+    if ($(`input[id=${searchKey}]`).parsley().validate() === true) {
+        var searchTerm = $(`input[id=${searchKey}]`).val();
+        fetch(searchKey, searchTerm);
+        $('.book').append('<img src="loading.gif">');
+    }
 });
 
 $('.book').on('click', '.book-title', function () {
@@ -54,5 +42,4 @@ $('.book').on('click', '.book-title', function () {
     $('.book').empty();
     $('.book').append(specificBook);    
 });
-
 
